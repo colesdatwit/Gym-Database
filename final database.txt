@@ -1,0 +1,236 @@
+create database gym;
+
+create table Location
+(
+    Location_ID VARCHAR(4) NOT NULL,
+    Name		VARCHAR(20) NOT NULL,
+    Address		VARCHAR(20),
+    City		Varchar(20),
+    State		Varchar(2),
+    Zip			Varchar(5),
+    Telephone	Varchar(14) NOT NULL,
+    Year_Opened Varchar(4),
+    CONSTRAINT LOCATION_PK PRIMARY KEY (Location_ID)
+    );
+
+INSERT INTO `location` (`Location_ID`, `Name`, `Address`, `City`, `State`, `Zip`, `Telephone`, `Year_Opened`) VALUES
+('B010', 'Boston Gym', '111 Something St.', 'Boston', 'MA', '02108', '111-111-1111', '2010'),
+('C010', 'Cambridge Gym', '222 Out Rd.', 'Cambridge', 'MA', '02114', '222-222-2222', '2011'),
+('M010', 'Medford Gym', '333 Peak Ave.', 'Medford', 'MA', '02145', '333-333-3333', '2013');
+
+
+create table Employee
+(
+    Employee_ID VARCHAR(4) NOT NULL,
+    Location_ID VARCHAR(4),
+    Manager_ID VARCHAR(4),
+    Name		VARCHAR(20) NOT NULL,
+    DOB			VARCHAR(8),
+    Address		VARCHAR(20),
+    City		Varchar(20),
+    State		Varchar(2),
+    Zip			Varchar(5),
+    Telephone	Varchar(14) NOT NULL,
+    Date_Employed Varchar(4),
+    CONSTRAINT EMPLOYEE_PK PRIMARY KEY (Employee_ID),
+    CONSTRAINT EMPLOYEE_FK1 FOREIGN KEY (Location_ID) REFERENCES Location (Location_ID)
+    );
+
+INSERT INTO `employee` (`Employee_ID`, `Location_ID`, `Manager_ID`, `Name`, `DOB`, `Address`, `City`, `State`, `Zip`, `Telephone`, `Date_Employed`) VALUES
+('A001', 'M010', 'MM01', 'Howard Tony', '10/23/76', '111 What St.', 'Medford', 'MA', '02145', '112-111-1111', '2010'),
+('A002', 'M010', 'MM01', 'Bethy Wane', '03/20/00', '22 Jump St.', 'Medford', 'MA', '02145', '122-222-2222', '2011'),
+('A003', 'B010', 'MB01', 'Jack Cooper', '04/10/90', '11 Ow Rd.', 'Boston', 'MA', '02108', '221-211-1111', '2012'),
+('A004', 'B010', 'MB01', 'Jill Cooper', '05/24/92', '22 Oof Ave.', 'Boston', 'MA', '02108', '112-122-2222', '2012'),
+('A005', 'C010', 'MC01', 'Kyle Crane', '07/14/90', '32 Wack St.', 'Cambridge', 'MA', '02114', '331-311-3333', '2014'),
+('A006', 'C010', 'MC01', 'Mia Caldwell', '01/15/00', '44 Ouch Rd.', 'Cambridge', 'MA', '02114', '321-322-2233', '2013');
+
+create table Member
+(
+    Member_ID VARCHAR(4) NOT NULL,
+    Name		VARCHAR(20) NOT NULL,
+    DOB			VARCHAR(8),
+    Address		VARCHAR(20),
+    City		Varchar(20),
+    State		Varchar(2),
+    Zip			Varchar(5),
+    Telephone	Varchar(14) NOT NULL,
+    Date_Started Varchar(8),
+    CONSTRAINT Member_PK PRIMARY KEY (Member_ID)
+    );
+
+INSERT INTO `member` (`Member_ID`, `Name`, `DOB`, `Address`, `City`, `State`, `Zip`, `Telephone`, `Date_Started`) VALUES
+('E001', 'Max Lax', '11/22/00', '11 Yeah St.', 'Boston', 'MA', '02108', '112-402-4949', '2010'),
+('E002', 'Jake Statefarm', '02/28/00', '33 Nope St.', 'Boston', 'MA', '02108', '222-301-2222', '2011'),
+('E003', 'Lina Pearce', '10/23/76', '60 Ford Rd.', 'Boston', 'MA', '02108', '321-490-5603', '2010'),
+('E004', 'Mona Lisa', '05/10/00', '3 Facts Ave.', 'Cambridge', 'MA', '02114', '789-003-3013', '2012'),
+('E005', 'Gordan Freeman', '03/23/85', '23 Yikes St.', 'Cambridge', 'MA', '02114', '949-329-9402', '2012'),
+('E006', 'Catherine Gonzales', '12/02/99', '34 Why Rd.', 'Cambridge', 'MA', '02114', '031-331-2039', '2011'),
+('E007', 'Frank Woods', '09/12/70', '64 Help Blvd.', 'Medford', 'MA', '02145', '304-201-0202', '2013'),
+('E008', 'Robert Mitchel', '05/24/80', '31 Free Ave.', 'Medford', 'MA', '02145', '450-314-4905', '2014'),
+('E009', 'Faith Connors', '08/17/98', '54 Run Rd.', 'Medford', 'MA', '02145', '391-220-9592', '2011');
+
+create table Room
+(
+    Room_ID VARCHAR(4) NOT NULL,
+    Location_ID VARCHAR(4),
+    Name		VARCHAR(20) NOT NULL,
+    Reserved	Boolean,
+    CONSTRAINT Room_PK PRIMARY KEY (Room_ID),
+    CONSTRAINT Room_FK1 FOREIGN KEY (Location_ID) REFERENCES location(Location_ID)
+    );
+
+INSERT INTO `room` (`Room_ID`, `Location_ID`, `Name`, `Reserved`) VALUES
+('RB01', 'B010', 'Boston Room 1', 1),
+('RB02', 'B010', 'Boston Room 2', 0),
+('RC01', 'C010', 'Camb Room 1', 1),
+('RC02', 'C010', 'Camb Room 2', 1),
+('RM01', 'M010', 'Medf Room 1', 1),
+('RM02', 'M010', 'Medf Room 2', 1);
+
+create table Supplier
+(
+    Supplier_ID VARCHAR(4) NOT NULL,
+    Name		VARCHAR(20) NOT NULL,
+    Address		VARCHAR(20),
+    City		Varchar(20),
+    State		Varchar(2),
+    Zip			Varchar(5),
+    CONSTRAINT Supplier_PK PRIMARY KEY (Supplier_ID)
+    );
+
+INSERT INTO `supplier` (`Supplier_ID`, `Name`, `Address`, `City`, `State`, `Zip`) VALUES
+('S001', 'Frito-Lay', '100 Commerce Dr.', 'Braintree', 'MA', '02184'),
+('S002', 'PepsiCo', '100 John Rd.', 'Canton', 'MA', '02184'),
+('S003', 'Cybex International', '51 Alder St.', 'Medway', 'MA', '02053');
+
+create table Product
+(
+    Product_ID VARCHAR(4) NOT NULL,
+    Quantity INT NOT NULL,
+    Price INT NOT NULL,
+    CONSTRAINT Product_PK PRIMARY KEY (Product_ID)
+    );
+
+INSERT INTO `product` (`Product_ID`, `Quantity`, `Price`) VALUES
+('AP01', 10, 20),
+('AP02', 30, 40),
+('B021', 24, 25),
+('R031', 42, 56);
+
+create table Equipment
+(
+    Equipment_ID VARCHAR(4) NOT NULL,
+    Room_ID VARCHAR(4),
+    Employee_ID VARCHAR(4),
+    GoodCondition boolean,
+    CONSTRAINT Equipment_PK PRIMARY KEY (Equipment_ID),
+    CONSTRAINT Equipment_FK1 FOREIGN KEY (Room_ID) REFERENCES Room (Room_ID),
+    CONSTRAINT Equipment_FK2 FOREIGN KEY (Employee_ID) REFERENCES employee (Employee_ID)
+    );
+
+INSERT INTO `equipment` (`Equipment_ID`, `Room_ID`, `Employee_ID`, `GoodCondition`) VALUES
+('0P06', 'RM02', 'A002', 1),
+('OP01', 'RB01', 'A003', 1),
+('OP02', 'RB02', 'A004', 1),
+('OP03', 'RC01', 'A005', 1),
+('OP04', 'RC02', 'A006', 1),
+('OP05', 'RM01', 'A001', 1);
+
+create table Reservation
+(
+    Reservation_ID VARCHAR(4) NOT NULL,
+    Room_ID VARCHAR(4),
+    Member_ID VARCHAR(4),
+    Date_Reserved VARCHAR(8),
+    CONSTRAINT RESERVATION_PK PRIMARY KEY (Reservation_ID),
+    CONSTRAINT RESERVATION_FK1 FOREIGN KEY (Room_ID) REFERENCES Room (Room_ID),
+    CONSTRAINT RESERVATION_FK2 FOREIGN KEY (Member_ID) REFERENCES Member (Member_ID)
+    );
+
+INSERT INTO `reservation` (`Reservation_ID`, `Room_ID`, `Member_ID`, `Date_Reserved`) VALUES
+('RE01', 'RC01', 'E004', '03/19/22'),
+('RE02', 'RC02', 'E005', '03/20/22');
+
+create table Class
+(
+    Class_ID VARCHAR(4) NOT NULL,
+    Room_ID VARCHAR(4),
+    employee_ID VARCHAR(4),
+    Name		VARCHAR(20) NOT NULL,
+    Teacher		VARCHAR(20) NOT NULL,
+    Description VARCHAR(20),
+    CONSTRAINT CLASS_PK PRIMARY KEY (Class_ID),
+    CONSTRAINT CLASS_FK1 FOREIGN KEY (Room_ID) REFERENCES Room (Room_ID),
+    CONSTRAINT CLASS_FK2 FOREIGN KEY (Employee_ID) REFERENCES employee (Employee_ID)
+    );
+
+INSERT INTO `class` (`Class_ID`, `Room_ID`, `employee_ID`, `Name`, `Teacher`, `Description`) VALUES
+('C01B', 'RB01', 'A003', 'Class 1 Boston', 'Jack Cooper', 'gym class, 10:30'),
+('C01M', 'RM01', 'A001', 'Class 1 Medford', 'Bethy Wane', 'gym class, 4:00'),
+('C02M', 'RM02', 'A002', 'Class 2 Medford', 'Howard Tony', 'gym class, 3:00');
+
+create table Attendees
+(
+    Member_ID VARCHAR(4),
+    Class_ID VARCHAR(4),
+    CONSTRAINT ATTENDEES_FK1 FOREIGN KEY (Member_ID) REFERENCES Member (Member_ID),
+    CONSTRAINT ATTENDEES_FK2 FOREIGN KEY (Class_ID) REFERENCES Class (Class_ID)
+    );
+
+INSERT INTO `attendees` (`Member_ID`, `Class_ID`) VALUES
+('E001', 'C01B'),
+('E002', 'C01B'),
+('E007', 'C01M'),
+('E008', 'C02M');
+
+create table Subscription
+(
+    Member_ID VARCHAR(4),
+    Location_ID VARCHAR(4),
+    CONSTRAINT SUBSCRIPTION_FK1 FOREIGN KEY (Member_ID) REFERENCES Member (Member_ID),
+    CONSTRAINT SUBSCRIPTION_FK2 FOREIGN KEY (Location_ID) REFERENCES Location (Location_ID)
+    );
+
+INSERT INTO `subscription` (`Member_ID`, `Location_ID`) VALUES
+('E001', 'B010'),
+('E002', 'B010'),
+('E003', 'B010'),
+('E004', 'C010'),
+('E005', 'C010'),
+('E006', 'C010'),
+('E007', 'M010'),
+('E008', 'M010'),
+('E009', 'M010');
+
+create table Supplies
+(
+    Supplier_ID VARCHAR(4),
+    Location_ID VARCHAR(4),
+    CONSTRAINT SUPPLIES_FK1 FOREIGN KEY (Supplier_ID) REFERENCES Supplier (Supplier_ID),
+    CONSTRAINT SUPPLIES_FK2 FOREIGN KEY (Location_ID) REFERENCES Location (Location_ID)
+    );
+
+INSERT INTO `supplies` (`Supplier_ID`, `Location_ID`) VALUES
+('S001', 'B010'),
+('S002', 'B010'),
+('S003', 'B010'),
+('S001', 'C010'),
+('S002', 'C010'),
+('S003', 'C010'),
+('S001', 'M010'),
+('S002', 'M010'),
+('S003', 'M010');
+
+create table Stocks
+(
+    Supplier_ID VARCHAR(4),
+    Product_ID VARCHAR(4),
+    CONSTRAINT STOCKS_FK1 FOREIGN KEY (Supplier_ID) REFERENCES Supplier (Supplier_ID),
+    CONSTRAINT STOCKS_FK2 FOREIGN KEY (Product_ID) REFERENCES Product (Product_ID)
+    );
+
+INSERT INTO `stocks` (`Supplier_ID`, `Product_ID`) VALUES
+('S003', 'AP01'),
+('S003', 'AP02'),
+('S001', 'B021'),
+('S002', 'R031');
